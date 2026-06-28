@@ -21,12 +21,16 @@ Useful links:
 
 ## Author
 
-**Maintainer**: André Leite <leite@de.ufpe.br>
+**Maintainer**: Andre Leite <leite@castlab.org>
 
 Authors:
 
-- André Leite <leite@de.ufpe.br>
+- Andre Leite <leite@castlab.org>
 
-Other contributors:
+- Marcos Wasilew <marcos.wasilew@gmail.com>
 
-- StrategicProjects \[copyright holder, funder\]
+- Hugo Vasconcelos <hugo.vasconcelos@ufpe.br>
+
+- Carlos Amorin <carlos.agaf@ufpe.br>
+
+- Diogo Bezerra <diogo.bezerra@ufpe.br>

@@ -127,8 +127,8 @@ with the text query.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span></span>
 <span><span class="co">#&gt;   score    id title                                  source  year</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     3 Nova lei de licitações entra em vigor  A       <span style="text-decoration: underline;">2</span>024</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     1     4 Congresso debate orçamentos municipais C       <span style="text-decoration: underline;">2</span>024</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     4 Congresso debate orçamentos municipais C       <span style="text-decoration: underline;">2</span>024</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     1     3 Nova lei de licitações entra em vigor  A       <span style="text-decoration: underline;">2</span>024</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/tnt_search.html">tnt_search</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">"congresso"</span>, filter <span class="op">=</span> <span class="va">source</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
@@ -141,8 +141,8 @@ with the text query.</p>
 <span><span class="co">#&gt;   score    id title                                     source  year</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1.39      1 Orçamento público aprovado pelo congresso A       <span style="text-decoration: underline;">2</span>022</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0.875     3 Nova lei de licitações entra em vigor     A       <span style="text-decoration: underline;">2</span>024</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 0.875     4 Congresso debate orçamentos municipais    C       <span style="text-decoration: underline;">2</span>024</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0.875     4 Congresso debate orçamentos municipais    C       <span style="text-decoration: underline;">2</span>024</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 0.875     3 Nova lei de licitações entra em vigor     A       <span style="text-decoration: underline;">2</span>024</span></span></code></pre></div>
 <p>You can also pass a raw <a href="https://docs.rs/tantivy/latest/tantivy/query/struct.QueryParser.html" class="external-link">Tantivy
 query string</a> for anything the helpers do not cover:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -150,8 +150,8 @@ query string</a> for anything the helpers do not cover:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span></span>
 <span><span class="co">#&gt;   score    id title                               source  year</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 1.88      5 Tribunal de contas analisa despesas B       <span style="text-decoration: underline;">2</span>023</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0.875     2 Reforma tributária avança no senado B       <span style="text-decoration: underline;">2</span>023</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0.875     2 Reforma tributária avança no senado B       <span style="text-decoration: underline;">2</span>023</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0.875     5 Tribunal de contas analisa despesas B       <span style="text-decoration: underline;">2</span>023</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="highlighting-and-ordering">Highlighting and ordering<a class="anchor" aria-label="anchor" href="#highlighting-and-ordering"></a>
@@ -165,10 +165,10 @@ query string</a> for anything the helpers do not cover:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
 <span><span class="co">#&gt;   title                                      year</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Nova lei de licitações entra em vigor      <span style="text-decoration: underline;">2</span>024</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Congresso debate orçamentos municipais     <span style="text-decoration: underline;">2</span>024</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Tribunal de contas analisa despesas        <span style="text-decoration: underline;">2</span>023</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Reforma tributária avança no senado        <span style="text-decoration: underline;">2</span>023</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Congresso debate orçamentos municipais     <span style="text-decoration: underline;">2</span>024</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Nova lei de licitações entra em vigor      <span style="text-decoration: underline;">2</span>024</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Reforma tributária avança no senado        <span style="text-decoration: underline;">2</span>023</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Tribunal de contas analisa despesas        <span style="text-decoration: underline;">2</span>023</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Orçamento público aprovado pelo congresso  <span style="text-decoration: underline;">2</span>022</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -275,7 +275,7 @@ stemming/stop-word options.</li>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by André Leite, StrategicProjects.</p>
+  <p>Developed by Andre Leite, Marcos Wasilew, Hugo Vasconcelos, Carlos Amorin, Diogo Bezerra.</p>
 </div>
 
 <div class="pkgdown-footer-right">

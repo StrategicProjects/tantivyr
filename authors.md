@@ -2,22 +2,28 @@
 
 ## Authors
 
-- **André Leite**. Author, maintainer.
+- **Andre Leite**. Author, maintainer.
 
-- **StrategicProjects**. Copyright holder, funder.
+- **Marcos Wasilew**. Author.
+
+- **Hugo Vasconcelos**. Author.
+
+- **Carlos Amorin**. Author.
+
+- **Diogo Bezerra**. Author.
 
 ## Citation
 
 Source:
 [`DESCRIPTION`](https://github.com/StrategicProjects/tantivyr/blob/main/DESCRIPTION)
 
-Leite A (2026). *tantivyr: Fast Full-Text Search for R with 'Tantivy'*.
-R package version 0.1.0,
-<https://strategicprojects.github.io/tantivyr/>.
+Leite A, Wasilew M, Vasconcelos H, Amorin C, Bezerra D (2026).
+*tantivyr: Fast Full-Text Search for R with 'Tantivy'*. R package
+version 0.1.0, <https://strategicprojects.github.io/tantivyr/>.
 
     @Manual{,
       title = {tantivyr: Fast Full-Text Search for R with 'Tantivy'},
-      author = {André Leite},
+      author = {Andre Leite and Marcos Wasilew and Hugo Vasconcelos and Carlos Amorin and Diogo Bezerra},
       year = {2026},
       note = {R package version 0.1.0},
       url = {https://strategicprojects.github.io/tantivyr/},
