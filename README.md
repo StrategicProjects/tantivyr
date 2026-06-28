@@ -12,7 +12,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/tantivyr)](https://CRAN.R-project.org/package=tantivyr)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![extendr](https://img.shields.io/badge/extendr-%5E0.9-2dd4bf)](https://extendr.github.io/)
+[![extendr](https://img.shields.io/badge/extendr-%5E0.9-2dd4bf)](https://extendr.rs/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
@@ -28,7 +28,7 @@ PDF text, transcripts and legal acts.
 
 ## Installation
 
-You need a [Rust toolchain](https://www.rust-lang.org/tools/install) (`cargo`)
+You need a [Rust toolchain](https://rust-lang.org/tools/install/) (`cargo`)
 to build the package from source.
 
 ```r
@@ -69,8 +69,8 @@ tnt_search(idx, "orçamento")
 #> # A tibble: 2 × 4
 #>   score    id title                                      year
 #>   <dbl> <dbl> <chr>                                     <dbl>
-#> 1 0.710     4 Congresso debate orçamentos municipais     2024
-#> 2 0.710     1 Orçamento público aprovado pelo congresso  2022
+#> 1 0.710     1 Orçamento público aprovado pelo congresso  2022
+#> 2 0.710     4 Congresso debate orçamentos municipais     2024
 ```
 
 ### Filters, ordering and highlighting
@@ -90,8 +90,8 @@ tnt_search(idx, "", filter = year >= 2024)
 
 # highlighted snippets
 tnt_search(idx, "congresso", highlight = title)$title_snippet
-#> [1] "<b>Congresso</b> debate orçamentos municipais"   
-#> [2] "Orçamento público aprovado pelo <b>congresso</b>"
+#> [1] "Orçamento público aprovado pelo <b>congresso</b>"
+#> [2] "<b>Congresso</b> debate orçamentos municipais"
 
 # order by a fast field instead of relevance
 tnt_search(idx, "", order_by = year, desc = TRUE)[, c("title", "year")]

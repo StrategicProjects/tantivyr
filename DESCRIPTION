@@ -2,9 +2,11 @@ Package: tantivyr
 Title: Fast Full-Text Search for R with 'Tantivy'
 Version: 0.1.0
 Authors@R: c(
-    person("André", "Leite", , "leite@de.ufpe.br", role = c("aut", "cre")),
-    person("StrategicProjects", role = c("cph", "fnd"))
-    )
+    person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre")),
+    person("Marcos", "Wasilew", email = "marcos.wasilew@gmail.com", role = "aut"),
+    person("Hugo", "Vasconcelos", email = "hugo.vasconcelos@ufpe.br", role = "aut"),
+    person("Carlos", "Amorin", email = "carlos.agaf@ufpe.br", role = "aut"),
+    person("Diogo", "Bezerra", email = "diogo.bezerra@ufpe.br", role = "aut"))
 Description: Index data frames and document collections and run fast full-text
     search entirely on your machine. 'tantivyr' wraps the 'Tantivy' Rust search
     engine (a 'Lucene'-inspired library) to provide 'BM25' ranking, structured

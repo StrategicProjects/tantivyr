@@ -24,7 +24,7 @@ if (!"tantivyr" %in% loadedNamespaces()) pkgload::load_all(quiet = TRUE)
 [![CRAN status](https://www.r-pkg.org/badges/version/tantivyr)](https://CRAN.R-project.org/package=tantivyr)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![extendr](https://img.shields.io/badge/extendr-%5E0.9-2dd4bf)](https://extendr.github.io/)
+[![extendr](https://img.shields.io/badge/extendr-%5E0.9-2dd4bf)](https://extendr.rs/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
@@ -40,7 +40,7 @@ PDF text, transcripts and legal acts.
 
 ## Installation
 
-You need a [Rust toolchain](https://www.rust-lang.org/tools/install) (`cargo`)
+You need a [Rust toolchain](https://rust-lang.org/tools/install/) (`cargo`)
 to build the package from source.
 
 ```r
