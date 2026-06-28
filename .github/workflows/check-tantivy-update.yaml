@@ -1,0 +1,110 @@
+# Watches crates.io for new Tantivy releases and opens a tracking issue when the
+# version pinned in src/rust/Cargo.lock falls behind the latest stable release.
+name: check-tantivy-update.yaml
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # every Monday at 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check crates.io for a newer Tantivy release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # Current version locked in the package.
+          current="$(awk '/^name = "tantivy"$/{f=1} f&&/^version = /{gsub(/[",]/,""); print $3; exit}' src/rust/Cargo.lock)"
+          if [ -z "${current}" ]; then
+            echo "Could not read the current tantivy version from Cargo.lock." >&2
+            exit 1
+          fi
+
+          # Latest stable version on crates.io (crates.io requires a User-Agent).
+          latest="$(curl -sSL -H "User-Agent: tantivyr-update-check (github.com/${REPO})" \
+            https://crates.io/api/v1/crates/tantivy | jq -r '.crate.max_stable_version')"
+
+          echo "current=${current}  latest=${latest}"
+
+          # Validate the value from the network before using it anywhere.
+          if ! printf '%s' "${latest}" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'; then
+            echo "Unexpected version string from crates.io: '${latest}'" >&2
+            exit 1
+          fi
+
+          if [ "${current}" = "${latest}" ]; then
+            echo "tantivy is up to date."
+            exit 0
+          fi
+
+          newest="$(printf '%s\n%s\n' "${current}" "${latest}" | sort -V | tail -n1)"
+          if [ "${newest}" = "${current}" ]; then
+            echo "Locked version is newer than or equal to crates.io; nothing to do."
+            exit 0
+          fi
+
+          # Pass the (validated) values to later steps without inline interpolation.
+          {
+            echo "TANTIVY_CURRENT=${current}"
+            echo "TANTIVY_LATEST=${latest}"
+          } >> "${GITHUB_ENV}"
+          echo "UPDATE_AVAILABLE=1" >> "${GITHUB_ENV}"
+
+      - name: Open or skip the tracking issue
+        if: env.UPDATE_AVAILABLE == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          title="Update tantivy to ${TANTIVY_LATEST}"
+
+          # Avoid duplicates: bail out if an open issue with this title exists.
+          existing="$(gh issue list --repo "${REPO}" --state open \
+            --search "in:title \"${title}\"" --json number --jq 'length')"
+          if [ "${existing}" != "0" ]; then
+            echo "An open issue for ${TANTIVY_LATEST} already exists; skipping."
+            exit 0
+          fi
+
+          # Ensure the label exists (idempotent).
+          gh label create dependencies --repo "${REPO}" \
+            --color 0366d6 --description "Dependency updates" --force || true
+
+          body="$(cat <<EOF
+          A newer stable release of [\`tantivy\`](https://crates.io/crates/tantivy) is available.
+
+          | | version |
+          |---|---|
+          | currently pinned (\`src/rust/Cargo.lock\`) | \`${TANTIVY_CURRENT}\` |
+          | latest on crates.io | \`${TANTIVY_LATEST}\` |
+
+          ### Suggested steps
+          1. Bump the dependency in \`src/rust/Cargo.toml\` if the minor/major changed.
+          2. \`cargo update -p tantivy --manifest-path src/rust/Cargo.toml\`
+          3. Re-vendor crates: \`Rscript -e 'rextendr::vendor_pkgs()'\`
+          4. Adjust the Rust bindings for any breaking API changes and run
+             \`rextendr::document()\`, \`devtools::test()\`, \`devtools::check()\`.
+          5. Review the [Tantivy changelog](https://github.com/quickwit-oss/tantivy/blob/main/CHANGELOG.md).
+
+          _Opened automatically by the \`check-tantivy-update\` workflow._
+          EOF
+          )"
+
+          gh issue create --repo "${REPO}" \
+            --title "${title}" \
+            --label dependencies \
+            --body "${body}"
+          echo "Opened issue: ${title}"
