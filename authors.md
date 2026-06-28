@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/StrategicProjects/tantivyr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/StrategicProjects/tantivyr/blob/v0.1.0/DESCRIPTION)
 
 Leite A, Wasilew M, Vasconcelos H, Amorin C, Bezerra D (2026).
 *tantivyr: Fast Full-Text Search for R with 'Tantivy'*. R package
