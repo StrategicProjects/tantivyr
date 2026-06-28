@@ -1,0 +1,175 @@
+---
+title: "Getting started with tantivyr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with tantivyr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r setup}
+library(tantivyr)
+```
+
+`tantivyr` indexes text and searches it with BM25 ranking, structured filters,
+highlighting and incremental updates — locally, with no server. This vignette
+walks through the two ways of using it: the one-call convenience wrapper and the
+explicit schema API.
+
+## The convenience layer: `tnt_index_df()`
+
+Most of the time you have a data frame and want to search some of its columns.
+`tnt_index_df()` infers a schema, indexes every row and commits in one call.
+
+```{r}
+news <- data.frame(
+  id     = 1:5,
+  title  = c(
+    "Orçamento público aprovado pelo congresso",
+    "Reforma tributária avança no senado",
+    "Nova lei de licitações entra em vigor",
+    "Congresso debate orçamentos municipais",
+    "Tribunal de contas analisa despesas"
+  ),
+  source = c("A", "B", "A", "C", "B"),
+  year   = c(2022L, 2023L, 2024L, 2024L, 2023L)
+)
+
+idx <- tnt_index_df(
+  news,
+  text      = title,         # full-text column(s)
+  filters   = c(source, year), # columns to filter / order on
+  stemmer   = "portuguese",
+  stopwords = TRUE
+)
+idx
+```
+
+### Searching
+
+`tnt_search()` returns a tibble with a `score` column followed by every stored
+field. Because we used the Portuguese stemmer, a search for *orçamento* also
+matches *orçamentos*.
+
+```{r}
+tnt_search(idx, "orçamento")
+```
+
+### Filtering
+
+Filters can be written as ordinary R comparisons. They are combined with the
+text query.
+
+```{r}
+tnt_search(idx, "", filter = year >= 2024)
+
+tnt_search(idx, "congresso", filter = source == "A")
+
+tnt_search(idx, "", filter = year %in% c(2022, 2024), limit = 10)
+```
+
+You can also pass a raw [Tantivy query
+string](https://docs.rs/tantivy/latest/tantivy/query/struct.QueryParser.html)
+for anything the helpers do not cover:
+
+```{r}
+tnt_search(idx, "", filter = "year:[2023 TO *] AND source:B")
+```
+
+### Highlighting and ordering
+
+```{r}
+tnt_search(idx, "congresso", highlight = title)$title_snippet
+
+tnt_search(idx, "", order_by = year, desc = TRUE)[, c("title", "year")]
+```
+
+### Counting
+
+`tnt_count()` returns the total number of matches, ignoring any limit.
+
+```{r}
+tnt_count(idx, "congresso")
+tnt_count(idx, "", filter = year == 2024)
+```
+
+## The explicit layer: schemas and persistence
+
+For full control over how each field is stored, indexed and analysed, build a
+schema with `tnt_schema()` and the `tnt_*()` field constructors, then manage the
+index yourself.
+
+```{r}
+sch <- tnt_schema(
+  id    = tnt_i64(),
+  slug  = tnt_text(stemmer = "raw"),                 # exact key for updates
+  title = tnt_text(stemmer = "portuguese", stored = TRUE),
+  body  = tnt_text(stemmer = "portuguese"),
+  date  = tnt_date(fast = TRUE)
+)
+
+path <- tempfile()
+idx <- tnt_index(path, schema = sch)
+```
+
+Add documents and commit to make them searchable. Operations return the index
+invisibly, so they pipe.
+
+```{r}
+docs <- data.frame(
+  id    = 1:2,
+  slug  = c("edital-001", "edital-002"),
+  title = c("Edital de licitação 001", "Edital de licitação 002"),
+  body  = c("Aquisição de equipamentos de informática.",
+            "Contratação de serviços de limpeza."),
+  date  = as.Date(c("2024-02-01", "2024-03-15"))
+)
+
+idx |> tnt_add(docs) |> tnt_commit()
+tnt_num_docs(idx)
+```
+
+### Incremental updates and deletes
+
+`tnt_update()` replaces documents by a key column; `tnt_delete()` removes them.
+Both need a commit to take effect.
+
+```{r}
+idx |>
+  tnt_update(
+    data.frame(id = 1L, slug = "edital-001",
+               title = "Edital de licitação 001 (retificado)",
+               body = "Aquisição de notebooks.",
+               date = as.Date("2024-02-10")),
+    by = slug
+  ) |>
+  tnt_commit()
+
+tnt_search(idx, "notebooks")[, c("id", "title")]
+
+idx |> tnt_delete(slug == "edital-002") |> tnt_commit()
+tnt_num_docs(idx)
+```
+
+### Reopening an index
+
+On-disk indexes survive across sessions. Call `tnt_index()` with just the path
+to reopen — the schema is restored automatically.
+
+```{r}
+reopened <- tnt_index(path)
+tnt_num_docs(reopened)
+```
+
+## Where to go next
+
+- `?tnt_search` documents every search option.
+- `?tnt_field` lists the field types and their stemming/stop-word options.
+- `tnt_stemmers()` returns the supported languages.
+```{r, include = FALSE}
+unlink(path, recursive = TRUE)
+```

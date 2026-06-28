@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="516" height="596" viewBox="0 0 516 596" xmlns="http://www.w3.org/2000/svg" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#134e4a"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+
+  <!-- hex border + fill -->
+  <polygon points="258,11 500,150 500,446 258,585 16,446 16,150"
+           fill="url(#bg)" stroke="#5eead4" stroke-width="14"/>
+
+  <!-- stylized document / index lines -->
+  <g transform="translate(150,150)" stroke="#99f6e4" stroke-linecap="round">
+    <line x1="0"  y1="20"  x2="150" y2="20"  stroke-width="16" opacity="0.85"/>
+    <line x1="0"  y1="70"  x2="120" y2="70"  stroke-width="16" opacity="0.65"/>
+    <line x1="0"  y1="120" x2="150" y2="120" stroke-width="16" opacity="0.45"/>
+    <line x1="0"  y1="170" x2="95"  y2="170" stroke-width="16" opacity="0.30"/>
+  </g>
+
+  <!-- magnifying glass -->
+  <g transform="translate(258,330)">
+    <circle cx="0" cy="0" r="92" fill="none" stroke="url(#glass)" stroke-width="26"/>
+    <circle cx="0" cy="0" r="92" fill="#5eead4" opacity="0.12"/>
+    <line x1="66" y1="66" x2="135" y2="135" stroke="url(#glass)"
+          stroke-width="30" stroke-linecap="round"/>
+  </g>
+
+  <!-- wordmark -->
+  <text x="258" y="540" text-anchor="middle" font-size="74" font-weight="700"
+        fill="#f0fdfa" letter-spacing="1">tantivyr</text>
+</svg>

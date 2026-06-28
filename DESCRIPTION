@@ -1,0 +1,38 @@
+Package: tantivyr
+Title: Fast Full-Text Search for R with 'Tantivy'
+Version: 0.1.0
+Authors@R: c(
+    person("André", "Leite", , "leite@de.ufpe.br", role = c("aut", "cre")),
+    person("StrategicProjects", role = c("cph", "fnd"))
+    )
+Description: Index data frames and document collections and run fast full-text
+    search entirely on your machine. 'tantivyr' wraps the 'Tantivy' Rust search
+    engine (a 'Lucene'-inspired library) to provide 'BM25' ranking, structured
+    filters, snippet highlighting and incremental updates over an on-disk or
+    in-memory index. First-class support is provided for stemming and stop words
+    in Portuguese and English, making it well suited to public documents, news
+    clippings, extracted 'PDF' text, transcripts and legal acts.
+License: MIT + file LICENSE
+URL: https://strategicprojects.github.io/tantivyr/,
+    https://github.com/StrategicProjects/tantivyr
+BugReports: https://github.com/StrategicProjects/tantivyr/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+SystemRequirements: Cargo (Rust's package manager), rustc
+Depends:
+    R (>= 4.2)
+Imports:
+    cli,
+    rlang (>= 1.1.0),
+    tibble,
+    tidyselect
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
+Config/testthat/edition: 3
+Config/rextendr/version: 0.5.0
+VignetteBuilder: knitr
+Biarch: true
+Config/roxygen2/version: 8.0.0

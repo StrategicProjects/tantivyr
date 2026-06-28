@@ -1,0 +1,24 @@
+[package]
+name = 'tantivyr'
+publish = false
+version = '0.1.0'
+edition = '2021'
+rust-version = '1.75'
+
+[lib]
+crate-type = [ 'rlib', 'staticlib' ]
+name = 'tantivyr'
+
+[[bin]]
+name = 'document'
+path = 'document.rs'
+
+[dependencies]
+extendr-api = '0.9'
+tantivy = '0.26'
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 2
+strip = true

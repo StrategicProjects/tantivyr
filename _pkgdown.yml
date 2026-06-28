@@ -1,0 +1,49 @@
+url: https://strategicprojects.github.io/tantivyr/
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#0f766e"
+    base_font: {google: "Inter"}
+    code_font: {google: "JetBrains Mono"}
+
+home:
+  title: tantivyr • Fast full-text search for R
+  description: >
+    Index data frames and documents and search them with BM25 ranking, filters,
+    highlights and incremental updates, powered by the Tantivy Rust engine.
+
+navbar:
+  structure:
+    left: [intro, reference, news]
+    right: [search, github]
+
+reference:
+  - title: Create & open indexes
+    desc: Build an index from a data frame, or from an explicit schema.
+    contents:
+      - tnt_index_df
+      - tnt_index
+      - tnt_index_info
+      - tnt_num_docs
+  - title: Define a schema
+    desc: Field types and stemming options.
+    contents:
+      - tnt_schema
+      - tnt_field
+      - tnt_stemmers
+  - title: Write documents
+    desc: Add, update, delete and commit.
+    contents:
+      - tnt_add
+      - tnt_commit
+      - tnt_update
+      - tnt_delete
+  - title: Search
+    contents:
+      - tnt_search
+      - tnt_count
+  - title: Package
+    contents:
+      - tantivyr-package
+      - tantivy_version
