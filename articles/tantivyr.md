@@ -105,8 +105,8 @@ tnt_search(idx, "", filter = "year:[2023 TO *] AND source:B")
 #> # A tibble: 2 × 5
 #>   score    id title                               source  year
 #>   <dbl> <dbl> <chr>                               <chr>  <dbl>
-#> 1 0.875     2 Reforma tributária avança no senado B       2023
-#> 2 0.875     5 Tribunal de contas analisa despesas B       2023
+#> 1 1.88      5 Tribunal de contas analisa despesas B       2023
+#> 2 0.875     2 Reforma tributária avança no senado B       2023
 ```
 
 ### Highlighting and ordering
@@ -123,8 +123,8 @@ tnt_search(idx, "", order_by = year, desc = TRUE)[, c("title", "year")]
 #>   <chr>                                     <dbl>
 #> 1 Congresso debate orçamentos municipais     2024
 #> 2 Nova lei de licitações entra em vigor      2024
-#> 3 Reforma tributária avança no senado        2023
-#> 4 Tribunal de contas analisa despesas        2023
+#> 3 Tribunal de contas analisa despesas        2023
+#> 4 Reforma tributária avança no senado        2023
 #> 5 Orçamento público aprovado pelo congresso  2022
 ```
 
