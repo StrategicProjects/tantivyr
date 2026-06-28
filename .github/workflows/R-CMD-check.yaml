@@ -43,13 +43,26 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      # Compile the bundled Rust (and its C deps, e.g. zstd) for a low macOS
-      # deployment target so their objects are never *newer* than the target R
-      # links against. This avoids spurious `ld` version-mismatch warnings that
-      # would otherwise fail the check on macOS runners.
-      - name: Set macOS deployment target
+      # Compile the bundled Rust (and its C deps, e.g. zstd) for exactly the macOS
+      # deployment target R itself uses, so the objects match both R's link target
+      # and libR.dylib. This avoids `ld` version-mismatch warnings (in either
+      # direction) that would otherwise fail the check on macOS runners.
+      - name: Align macOS deployment target with R
         if: runner.os == 'macOS'
-        run: echo "MACOSX_DEPLOYMENT_TARGET=11.0" >> "$GITHUB_ENV"
+        run: |
+          set -euo pipefail
+          mk="$(R RHOME)/etc/Makeconf"
+          target="$(awk -F'= *' '/^MACOSX_DEPLOYMENT_TARGET/{print $2; exit}' "$mk" 2>/dev/null || true)"
+          if [ -z "${target}" ]; then
+            libR="$(R RHOME)/lib/libR.dylib"
+            target="$(vtool -show-build "$libR" 2>/dev/null | awk '/minos/{print $2; exit}' || true)"
+          fi
+          if [ -n "${target}" ]; then
+            echo "MACOSX_DEPLOYMENT_TARGET=${target}" >> "$GITHUB_ENV"
+            echo "Using MACOSX_DEPLOYMENT_TARGET=${target}"
+          else
+            echo "Could not determine R's deployment target; leaving default."
+          fi
         shell: bash
 
       - uses: r-lib/actions/setup-r-dependencies@v2
