@@ -43,6 +43,15 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      # Compile the bundled Rust (and its C deps, e.g. zstd) for a low macOS
+      # deployment target so their objects are never *newer* than the target R
+      # links against. This avoids spurious `ld` version-mismatch warnings that
+      # would otherwise fail the check on macOS runners.
+      - name: Set macOS deployment target
+        if: runner.os == 'macOS'
+        run: echo "MACOSX_DEPLOYMENT_TARGET=11.0" >> "$GITHUB_ENV"
+        shell: bash
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
