@@ -105,7 +105,7 @@ tnt_search(idx, "", filter = "year:[2023 TO *] AND source:B")
 #> # A tibble: 2 × 5
 #>   score    id title                               source  year
 #>   <dbl> <dbl> <chr>                               <chr>  <dbl>
-#> 1 1.88      5 Tribunal de contas analisa despesas B       2023
+#> 1 0.875     5 Tribunal de contas analisa despesas B       2023
 #> 2 0.875     2 Reforma tributária avança no senado B       2023
 ```
 
