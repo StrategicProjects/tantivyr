@@ -56,4 +56,4 @@ Add, update, delete and commit.
   [`tantivyr-package`](https://strategicprojects.github.io/tantivyr/reference/tantivyr-package.md)
   : tantivyr: Fast Full-Text Search for R with 'Tantivy'
 - [`tantivy_version()`](https://strategicprojects.github.io/tantivyr/reference/tantivy_version.md)
-  : Tantivy version string.
+  : Version of the bundled 'Tantivy' engine

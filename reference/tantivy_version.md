@@ -1,9 +1,15 @@
-# Tantivy version string.
+# Version of the bundled 'Tantivy' engine
 
-Tantivy version string.
+Report the version string of the 'Tantivy' 'Rust' search engine that
+this package was built against.
 
 ## Usage
 
 ``` r
 tantivy_version()
 ```
+
+## Value
+
+A length-one character vector giving the version of the bundled
+'Tantivy' 'Rust' search engine (for example `"0.26.0"`).

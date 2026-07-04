@@ -1,7 +1,7 @@
 # tantivyr: Fast Full-Text Search for R with 'Tantivy'
 
 Index data frames and document collections and run fast full-text search
-entirely on your machine. 'tantivyr' wraps the 'Tantivy' Rust search
+entirely on your machine. 'tantivyr' wraps the 'Tantivy' 'Rust' search
 engine (a 'Lucene'-inspired library) to provide 'BM25' ranking,
 structured filters, snippet highlighting and incremental updates over an
 on-disk or in-memory index. First-class support is provided for stemming
