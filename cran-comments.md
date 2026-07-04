@@ -1,3 +1,12 @@
+## Resubmission
+
+This is a resubmission. In response to the CRAN review, I have:
+
+* Put software/API names in single quotes in the Description (added `'Rust'`;
+  `'Tantivy'`, `'Lucene'`, `'BM25'` and `'PDF'` were already quoted).
+* Added a `\value` tag to `tantivy_version.Rd` describing the returned object
+  (a length-one character vector with the bundled 'Tantivy' engine version).
+
 ## R CMD check results
 
 0 errors | 0 warnings | 2 notes

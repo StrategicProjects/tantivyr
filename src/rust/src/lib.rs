@@ -727,7 +727,13 @@ fn tnt_schema_info_(idx: IdxPtr) -> Result<List> {
     idx.schema_info()
 }
 
-/// Tantivy version string.
+/// Version of the bundled 'Tantivy' engine
+///
+/// Report the version string of the 'Tantivy' 'Rust' search engine that this
+/// package was built against.
+///
+/// @return A length-one character vector giving the version of the bundled
+///   'Tantivy' 'Rust' search engine (for example `"0.26.0"`).
 /// @export
 #[extendr]
 fn tantivy_version() -> String {

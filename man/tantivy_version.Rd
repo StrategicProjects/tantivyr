@@ -2,10 +2,15 @@
 % Please edit documentation in R/extendr-wrappers.R
 \name{tantivy_version}
 \alias{tantivy_version}
-\title{Tantivy version string.}
+\title{Version of the bundled 'Tantivy' engine}
 \usage{
 tantivy_version()
 }
+\value{
+A length-one character vector giving the version of the bundled
+'Tantivy' 'Rust' search engine (for example \code{"0.26.0"}).
+}
 \description{
-Tantivy version string.
+Report the version string of the 'Tantivy' 'Rust' search engine that this
+package was built against.
 }
