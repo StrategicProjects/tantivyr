@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
 
-Index data frames and document collections and run fast full-text search entirely on your machine. 'tantivyr' wraps the 'Tantivy' Rust search engine (a 'Lucene'-inspired library) to provide 'BM25' ranking, structured filters, snippet highlighting and incremental updates over an on-disk or in-memory index. First-class support is provided for stemming and stop words in Portuguese and English, making it well suited to public documents, news clippings, extracted 'PDF' text, transcripts and legal acts.
+Index data frames and document collections and run fast full-text search entirely on your machine. 'tantivyr' wraps the 'Tantivy' 'Rust' search engine (a 'Lucene'-inspired library) to provide 'BM25' ranking, structured filters, snippet highlighting and incremental updates over an on-disk or in-memory index. First-class support is provided for stemming and stop words in Portuguese and English, making it well suited to public documents, news clippings, extracted 'PDF' text, transcripts and legal acts.
 }
 \seealso{
 Useful links:
