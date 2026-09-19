@@ -1,0 +1,164 @@
+---
+title: "Searching Portuguese text"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Searching Portuguese text}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r setup}
+library(tantivyr)
+```
+
+Portuguese is a heavily inflected language: nouns and adjectives vary in gender
+and number, and every verb has dozens of forms. A search engine that only
+matches exact words misses most of what a reader would consider a hit. This
+vignette shows how `tantivyr` handles that with stemming and stop words, using
+the bundled `pt_news` dataset.
+
+## The data
+
+`pt_news` holds 36 short, fictional news stories in Brazilian Portuguese, six
+for each of six sections.
+
+```{r}
+pt_news
+```
+
+## Why stemming matters
+
+Let us index the same data twice: once with the default tokenizer, which only
+lower-cases words, and once with the Portuguese stemmer and stop-word list.
+
+```{r}
+plain <- tnt_index_df(
+  pt_news,
+  text    = c(title, body),
+  filters = c(section, date)
+)
+
+idx <- tnt_index_df(
+  pt_news,
+  text      = c(title, body),
+  filters   = c(section, date),
+  stemmer   = "portuguese",
+  stopwords = TRUE
+)
+```
+
+The stemmer reduces each word to a root, both when indexing and when parsing
+the query, so different forms of the same word meet in the middle. Compare the
+number of matches for a few queries:
+
+```{r}
+queries <- c("vacinas", "queimada", "pesquisa", "pesquisar")
+
+data.frame(
+  query   = queries,
+  plain   = vapply(queries, \(q) tnt_count(plain, q), numeric(1)),
+  stemmed = vapply(queries, \(q) tnt_count(idx, q), numeric(1)),
+  row.names = NULL
+)
+```
+
+No story contains the exact word *vacinas*, so the plain index finds nothing,
+while the stemmed index finds the stories about *vacina* and *vacinação*.
+Likewise *pesquisa*, *pesquisar* and *pesquisadores* all lead to the same
+stories:
+
+```{r}
+tnt_search(idx, "pesquisar")[, c("score", "section", "title")]
+```
+
+Stemming is a heuristic, not a dictionary. Irregular plurals do not always
+reduce to the same root: *hospital* and *hospitais*, for example, are kept
+apart by the Snowball algorithm. When that matters, search for both forms with
+`OR`.
+
+## Stop words
+
+Words such as *de*, *a*, *o* and *para* appear in nearly every document and
+carry no meaning for retrieval. With `stopwords = TRUE` they are dropped from
+both the index and the query:
+
+```{r}
+tnt_count(plain, "de")
+tnt_count(idx, "de")
+```
+
+This also keeps natural-language queries useful, because only the meaningful
+words take part in the ranking:
+
+```{r}
+tnt_search(idx, "a redução dos juros", limit = 3)[, c("score", "title")]
+```
+
+## Accents are significant
+
+The analyzer lower-cases text but keeps diacritics, so *orçamento* and
+*orcamento* are different words. Write queries with the proper accents:
+
+```{r}
+tnt_count(idx, "orçamento")
+tnt_count(idx, "orcamento")
+```
+
+If your users type without accents, strip them from both the text and the
+queries before they reach the index, for example with
+`iconv(x, to = "ASCII//TRANSLIT")` or `stringi::stri_trans_general(x,
+"Latin-ASCII")`, and keep the original text in a separate stored column for
+display.
+
+## Query syntax
+
+The query string supports phrases, boolean operators and field prefixes.
+
+```{r}
+# exact phrase
+tnt_search(idx, '"banco central"')[, c("score", "title")]
+
+# either word
+tnt_search(idx, "enchentes OR queimadas")[, c("section", "title")]
+
+# required and excluded words
+tnt_search(idx, "+juros -inflação")[, "title"]
+
+# restrict a word to one field
+tnt_search(idx, "title:vacina")[, "title"]
+```
+
+## Filters, ordering and highlights
+
+Filters combine with the text query and are written as ordinary R comparisons.
+
+```{r}
+tnt_search(idx, "água", filter = date >= as.Date("2025-01-01"))[, c("date", "title")]
+
+tnt_search(idx, "", filter = section == "esporte", order_by = date, limit = 3)[
+  , c("date", "title")
+]
+```
+
+`highlight` returns a snippet for each requested field, with the matching words
+wrapped in `<b>` tags. Note that the snippet marks the words as they appear in
+the text, not the stemmed query.
+
+```{r}
+hits <- tnt_search(idx, "vacinas", highlight = c(title, body))
+hits$title_snippet
+hits$body_snippet
+```
+
+## Other languages
+
+Portuguese is one of several Snowball stemmers bundled with the engine. The
+same workflow applies to any of them:
+
+```{r}
+tnt_stemmers()
+```
