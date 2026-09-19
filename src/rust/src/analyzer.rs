@@ -9,9 +9,16 @@
 //! * `raw`     — tantivy's built-in raw tokenizer (exact, untokenized).
 //! * `tnt_<code>`        — lowercase + stem in `<code>` (e.g. `tnt_pt`).
 //! * `tnt_<code>_stop`   — same, plus stop-word removal.
+//! * `..._fold`          — any of the above plus ASCII folding (accents removed),
+//!   e.g. `tnt_pt_stop_fold`. The pseudo-code `none` means "no stemming", so
+//!   `tnt_none_fold` is lowercase + folding only.
+//!
+//! Filter order is lowercase -> stop words -> stemmer -> ASCII folding. Folding
+//! comes last because stop-word lists and the Snowball stemmers expect properly
+//! accented input (e.g. the Portuguese `-ção` suffix).
 
 use tantivy::tokenizer::{
-    Language, LowerCaser, RemoveLongFilter, SimpleTokenizer, Stemmer, StopWordFilter, TextAnalyzer,
+    AsciiFoldingFilter, Language, LowerCaser, RemoveLongFilter, SimpleTokenizer, Stemmer, StopWordFilter, TextAnalyzer,
 };
 use tantivy::Index;
 
@@ -42,9 +49,14 @@ pub fn language_from_code(code: &str) -> Option<Language> {
     })
 }
 
-/// Build a [`TextAnalyzer`] for a given language code and stop-word flag.
-fn build_analyzer(code: &str, stopwords: bool) -> Option<TextAnalyzer> {
-    let language = language_from_code(code)?;
+/// Build a [`TextAnalyzer`] for a language code (or `none`), stop-word flag and
+/// ASCII-folding flag.
+fn build_analyzer(code: &str, stopwords: bool, fold: bool) -> Option<TextAnalyzer> {
+    let language = if code == "none" {
+        None
+    } else {
+        Some(language_from_code(code)?)
+    };
     let mut builder = TextAnalyzer::builder(SimpleTokenizer::default())
         .filter(RemoveLongFilter::limit(40))
         .filter(LowerCaser)
@@ -54,7 +66,12 @@ fn build_analyzer(code: &str, stopwords: bool) -> Option<TextAnalyzer> {
             builder = builder.filter_dynamic(StopWordFilter::remove(words));
         }
     }
-    builder = builder.filter_dynamic(Stemmer::new(language));
+    if let Some(language) = language {
+        builder = builder.filter_dynamic(Stemmer::new(language));
+    }
+    if fold {
+        builder = builder.filter_dynamic(AsciiFoldingFilter);
+    }
     Some(builder.build())
 }
 
@@ -66,11 +83,15 @@ pub fn register_analyzer(index: &Index, name: &str) {
     let Some(rest) = name.strip_prefix("tnt_") else {
         return; // built-in tokenizer; nothing to register
     };
+    let (rest, fold) = match rest.strip_suffix("_fold") {
+        Some(rest) => (rest, true),
+        None => (rest, false),
+    };
     let (code, stopwords) = match rest.strip_suffix("_stop") {
         Some(code) => (code, true),
         None => (rest, false),
     };
-    if let Some(analyzer) = build_analyzer(code, stopwords) {
+    if let Some(analyzer) = build_analyzer(code, stopwords, fold) {
         index.tokenizers().register(name, analyzer);
     }
 }

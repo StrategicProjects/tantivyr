@@ -98,21 +98,49 @@ words take part in the ranking:
 tnt_search(idx, "a redução dos juros", limit = 3)[, c("score", "title")]
 ```
 
-## Accents are significant
+## Accents
 
-The analyzer lower-cases text but keeps diacritics, so *orçamento* and
-*orcamento* are different words. Write queries with the proper accents:
+By default the analyzer lower-cases text but keeps diacritics, so *orçamento*
+and *orcamento* are different words:
 
 ```{r}
 tnt_count(idx, "orçamento")
 tnt_count(idx, "orcamento")
 ```
 
-If your users type without accents, strip them from both the text and the
-queries before they reach the index, for example with
-`iconv(x, to = "ASCII//TRANSLIT")` or `stringi::stri_trans_general(x,
-"Latin-ASCII")`, and keep the original text in a separate stored column for
-display.
+People often type queries without accents. Set `fold_accents = TRUE` to remove
+diacritics from the indexed words and from the queries, so both spellings meet.
+Stored text is untouched, so results and snippets still show the accents.
+
+```{r}
+folded <- tnt_index_df(
+  pt_news,
+  text         = c(title, body),
+  filters      = c(section, date),
+  stemmer      = "portuguese",
+  stopwords    = TRUE,
+  fold_accents = TRUE
+)
+
+tnt_count(folded, "orcamento")
+tnt_search(folded, "saude agua", limit = 3)[, c("score", "title")]
+tnt_search(folded, "orcamento", highlight = title)$title_snippet
+```
+
+Folding runs *after* stop-word removal and stemming, because both rely on
+correctly accented text. The consequence is that an unaccented query is stemmed
+as typed. Most words are unaffected, but the Portuguese stemmer only recognises
+some suffixes, such as *-ção*, when they carry the accent:
+
+```{r}
+tnt_count(folded, "vacinação")
+tnt_count(folded, "vacinacao")
+```
+
+If you need unaccented queries to behave exactly like accented ones, strip the
+accents yourself from both the text and the queries before indexing, for
+example with `iconv(x, to = "ASCII//TRANSLIT")`, and keep the original text in
+a separate stored column for display.
 
 ## Query syntax
 

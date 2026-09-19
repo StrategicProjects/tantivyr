@@ -2,6 +2,7 @@
 
 This is a minor update (0.1.0 -> 0.1.1). It:
 
+* adds an accent-folding option (`fold_accents`) for text fields;
 * adds a small example dataset (`pt_news`) and a second vignette;
 * updates the bundled 'Tantivy' engine to its 0.26.2 bug-fix release and
   refreshes the vendored 'Rust' crates;

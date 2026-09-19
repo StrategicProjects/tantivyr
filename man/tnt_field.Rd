@@ -16,7 +16,8 @@ tnt_text(
   indexed = TRUE,
   fast = FALSE,
   stemmer = "none",
-  stopwords = FALSE
+  stopwords = FALSE,
+  fold_accents = FALSE
 )
 
 tnt_i64(stored = TRUE, indexed = TRUE, fast = FALSE)
@@ -49,6 +50,12 @@ exact filters), or a Snowball language such as \code{"portuguese"} or
 
 \item{stopwords}{Logical. Remove stop words for the chosen language. Bundled
 for Portuguese and English. Defaults to \code{FALSE}.}
+
+\item{fold_accents}{Logical. Remove diacritics from indexed words and from
+queries, so that \code{"orcamento"} finds \code{"orçamento"} (ASCII folding). Applied
+after stop-word removal and stemming, which both rely on correctly accented
+text. Stored values keep their accents. Not available with
+\code{stemmer = "raw"}. Defaults to \code{FALSE}.}
 }
 \value{
 A \code{tnt_field} object.

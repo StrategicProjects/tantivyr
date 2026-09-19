@@ -1,5 +1,9 @@
 # tantivyr 0.1.1
 
+* New `fold_accents` argument in `tnt_text()` and `tnt_index_df()`: removes
+  diacritics from indexed words and queries (ASCII folding), so a query typed
+  without accents, such as `"orcamento"`, finds `"orçamento"`. Stored text and
+  snippets keep their accents.
 * New `pt_news` dataset: 36 short, fictional news stories in Brazilian
   Portuguese for trying out stemming, stop words, filters and highlights.
 * New vignette "Searching Portuguese text" covering stemming, stop words,

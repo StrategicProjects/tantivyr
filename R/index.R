@@ -96,8 +96,8 @@ tnt_index <- function(path = NULL, schema = NULL, overwrite = FALSE,
 #'   full-text fields.
 #' @param filters <[`tidy-select`][tidyselect::language]> Columns to index for
 #'   filtering/ordering (their type is inferred). Optional.
-#' @param stemmer,stopwords Stemming and stop-word options applied to all `text`
-#'   columns. See [tnt_text()].
+#' @param stemmer,stopwords,fold_accents Stemming, stop-word and accent-folding
+#'   options applied to all `text` columns. See [tnt_text()].
 #' @param stored Logical. Store text columns so they are returned by searches.
 #' @param path,overwrite,heap_mb Passed to [tnt_index()].
 #'
@@ -114,7 +114,8 @@ tnt_index <- function(path = NULL, schema = NULL, overwrite = FALSE,
 #' @export
 tnt_index_df <- function(data, text, filters = NULL, stemmer = "none",
                          stopwords = FALSE, stored = TRUE, path = NULL,
-                         overwrite = FALSE, heap_mb = 128) {
+                         overwrite = FALSE, heap_mb = 128,
+                         fold_accents = FALSE) {
   if (!is.data.frame(data)) {
     cli::cli_abort("{.arg data} must be a data frame.")
   }
@@ -128,7 +129,10 @@ tnt_index_df <- function(data, text, filters = NULL, stemmer = "none",
 
   fields <- list()
   for (nm in text_cols) {
-    fields[[nm]] <- tnt_text(stored = stored, stemmer = stemmer, stopwords = stopwords)
+    fields[[nm]] <- tnt_text(
+      stored = stored, stemmer = stemmer, stopwords = stopwords,
+      fold_accents = fold_accents
+    )
   }
   for (nm in filter_cols) {
     kind <- tnt_infer_kind(data[[nm]])
