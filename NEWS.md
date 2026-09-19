@@ -1,3 +1,8 @@
+# tantivyr (development version)
+
+* Updated the bundled Tantivy engine to 0.26.2 (bug-fix release; no API
+  changes).
+
 # tantivyr 0.1.0
 
 * Initial release.

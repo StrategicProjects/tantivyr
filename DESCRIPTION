@@ -1,6 +1,6 @@
 Package: tantivyr
 Title: Fast Full-Text Search for R with 'Tantivy'
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre")),
     person("Marcos", "Wasilew", email = "marcos.wasilew@gmail.com", role = "aut"),
