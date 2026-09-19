@@ -18,7 +18,8 @@ tnt_index_df(
   stored = TRUE,
   path = NULL,
   overwrite = FALSE,
-  heap_mb = 128
+  heap_mb = 128,
+  fold_accents = FALSE
 )
 ```
 
@@ -39,9 +40,10 @@ tnt_index_df(
   Columns to index for filtering/ordering (their type is inferred).
   Optional.
 
-- stemmer, stopwords:
+- stemmer, stopwords, fold_accents:
 
-  Stemming and stop-word options applied to all `text` columns. See
+  Stemming, stop-word and accent-folding options applied to all `text`
+  columns. See
   [`tnt_text()`](https://strategicprojects.github.io/tantivyr/reference/tnt_field.md).
 
 - stored:

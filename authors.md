@@ -19,12 +19,12 @@ Source:
 
 Leite A, Wasilew M, Vasconcelos H, Amorim C, Bezerra D (2026).
 *tantivyr: Fast Full-Text Search for R with 'Tantivy'*. R package
-version 0.1.0.9000, <https://strategicprojects.github.io/tantivyr/>.
+version 0.1.1, <https://strategicprojects.github.io/tantivyr/>.
 
     @Manual{,
       title = {tantivyr: Fast Full-Text Search for R with 'Tantivy'},
       author = {Andre Leite and Marcos Wasilew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra},
       year = {2026},
-      note = {R package version 0.1.0.9000},
+      note = {R package version 0.1.1},
       url = {https://strategicprojects.github.io/tantivyr/},
     }

@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="index.html">tantivyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="articles/tantivyr.html">Get started</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/portuguese-text.html">Searching Portuguese text</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
@@ -64,16 +70,20 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You need a <a href="https://rust-lang.org/tools/install/" class="external-link">Rust toolchain</a> (<code>cargo</code>) to build the package from source.</p>
+<p>Install the released version from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tantivyr"</span><span class="op">)</span></span></code></pre></div>
+<p>Or the development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"StrategicProjects/tantivyr"</span><span class="op">)</span></span></code></pre></div>
+<p>Building from source needs a <a href="https://rust-lang.org/tools/install/" class="external-link">Rust toolchain</a> (<code>cargo</code> and <code>rustc</code> 1.88 or later). CRAN binaries for Windows and macOS do not.</p>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <p>The fastest way in is <code><a href="reference/tnt_index_df.html">tnt_index_df()</a></code>: point it at a data frame, say which columns are text and which are filters, and search.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://strategicprojects.github.io/tantivyr/">tantivyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">news</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
@@ -106,7 +116,7 @@
 <h3 id="filters-ordering-and-highlighting">Filters, ordering and highlighting<a class="anchor" aria-label="anchor" href="#filters-ordering-and-highlighting"></a>
 </h3>
 <p>Filters can be written as plain comparisons (<code>year &gt;= 2024</code>) or as Tantivy query strings. Snippets come back as <code>&lt;field&gt;_snippet</code> columns.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># structured filter</span></span>
 <span><span class="fu"><a href="reference/tnt_search.html">tnt_search</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">""</span>, filter <span class="op">=</span> <span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2024</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 4</span></span>
@@ -135,7 +145,7 @@
 <h2 id="explicit-schema-and-incremental-updates">Explicit schema and incremental updates<a class="anchor" aria-label="anchor" href="#explicit-schema-and-incremental-updates"></a>
 </h2>
 <p>For full control, declare a schema and manage the index yourself. Indexes can live on disk (and be reopened later) or in memory.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tnt_schema.html">tnt_schema</a></span><span class="op">(</span></span>
 <span>  id    <span class="op">=</span> <span class="fu"><a href="reference/tnt_field.html">tnt_i64</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  title <span class="op">=</span> <span class="fu"><a href="reference/tnt_field.html">tnt_text</a></span><span class="op">(</span>stemmer <span class="op">=</span> <span class="st">"portuguese"</span>, stored <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>

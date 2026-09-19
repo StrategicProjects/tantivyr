@@ -50,6 +50,11 @@ Add, update, delete and commit.
 - [`tnt_count()`](https://strategicprojects.github.io/tantivyr/reference/tnt_count.md)
   : Count matching documents
 
+## Data
+
+- [`pt_news`](https://strategicprojects.github.io/tantivyr/reference/pt_news.md)
+  : Fictional Portuguese news stories
+
 ## Package
 
 - [`tantivyr`](https://strategicprojects.github.io/tantivyr/reference/tantivyr-package.md)

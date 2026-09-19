@@ -9,7 +9,7 @@ a lightweight tnt_field object."><meta property="og:image" content="https://stra
 
     <a class="navbar-brand me-2" href="../index.html">tantivyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,6 +18,10 @@ a lightweight tnt_field object."><meta property="og:image" content="https://stra
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/tantivyr.html">Get started</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/portuguese-text.html">Searching Portuguese text</a></li>
+  </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -47,7 +51,8 @@ a lightweight <code>tnt_field</code> object.</p>
 <span>  indexed <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  fast <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  stemmer <span class="op">=</span> <span class="st">"none"</span>,</span>
-<span>  stopwords <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  stopwords <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  fold_accents <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">tnt_i64</span><span class="op">(</span>stored <span class="op">=</span> <span class="cn">TRUE</span>, indexed <span class="op">=</span> <span class="cn">TRUE</span>, fast <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -93,6 +98,14 @@ exact filters), or a Snowball language such as <code>"portuguese"</code> or
 <dt id="arg-stopwords">stopwords<a class="anchor" aria-label="anchor" href="#arg-stopwords"></a></dt>
 <dd><p>Logical. Remove stop words for the chosen language. Bundled
 for Portuguese and English. Defaults to <code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-fold-accents">fold_accents<a class="anchor" aria-label="anchor" href="#arg-fold-accents"></a></dt>
+<dd><p>Logical. Remove diacritics from indexed words and from
+queries, so that <code>"orcamento"</code> finds <code>"orçamento"</code> (ASCII folding). Applied
+after stop-word removal and stemming, which both rely on correctly accented
+text. Stored values keep their accents. Not available with
+<code>stemmer = "raw"</code>. Defaults to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
