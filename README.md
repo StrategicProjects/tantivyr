@@ -28,13 +28,21 @@ PDF text, transcripts and legal acts.
 
 ## Installation
 
-You need a [Rust toolchain](https://rust-lang.org/tools/install/) (`cargo`)
-to build the package from source.
+Install the released version from CRAN:
+
+```r
+install.packages("tantivyr")
+```
+
+Or the development version from GitHub:
 
 ```r
 # install.packages("pak")
 pak::pak("StrategicProjects/tantivyr")
 ```
+
+Building from source needs a [Rust toolchain](https://rust-lang.org/tools/install/)
+(`cargo` and `rustc` 1.88 or later). CRAN binaries for Windows and macOS do not.
 
 ## Quick start
 

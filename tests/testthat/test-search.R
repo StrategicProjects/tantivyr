@@ -85,3 +85,35 @@ test_that("date filters work on Date fields", {
   expect_equal(nrow(res), 2)
   expect_s3_class(res$ts, "POSIXct")
 })
+
+test_that("fold_accents matches queries typed without accents", {
+  df <- data.frame(
+    id = 1:3,
+    txt = c("Orçamento público aprovado", "Saúde e educação", "Água potável")
+  )
+  plain <- tnt_index_df(df, text = txt, stemmer = "portuguese")
+  folded <- tnt_index_df(df, text = txt, stemmer = "portuguese", fold_accents = TRUE)
+
+  expect_equal(tnt_count(plain, "orcamento"), 0)
+  expect_equal(tnt_count(folded, "orcamento"), 1)
+  expect_equal(tnt_count(folded, "orçamento"), 1)
+  expect_equal(tnt_count(folded, "SAUDE"), 1)
+  expect_equal(tnt_count(folded, "agua"), 1)
+
+  # stored text and snippets keep the original accents
+  hit <- tnt_search(folded, "orcamento", highlight = txt)
+  expect_equal(hit$txt, "Orçamento público aprovado")
+  expect_match(hit$txt_snippet, "<b>Orçamento</b>", fixed = TRUE)
+
+  # works without a stemmer too
+  nostem <- tnt_index_df(df, text = txt, fold_accents = TRUE)
+  expect_equal(tnt_count(nostem, "publico"), 1)
+})
+
+test_that("a folded on-disk index keeps folding after being reopened", {
+  path <- withr::local_tempdir()
+  df <- data.frame(id = 1L, txt = "Inflação em queda")
+  tnt_index_df(df, text = txt, stemmer = "portuguese", fold_accents = TRUE, path = path)
+  reopened <- tnt_index(path)
+  expect_equal(tnt_count(reopened, "inflacao"), 1)
+})

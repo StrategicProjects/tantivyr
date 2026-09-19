@@ -13,7 +13,8 @@ tnt_index_df(
   stored = TRUE,
   path = NULL,
   overwrite = FALSE,
-  heap_mb = 128
+  heap_mb = 128,
+  fold_accents = FALSE
 )
 }
 \arguments{
@@ -25,8 +26,8 @@ full-text fields.}
 \item{filters}{<\code{\link[tidyselect:language]{tidy-select}}> Columns to index for
 filtering/ordering (their type is inferred). Optional.}
 
-\item{stemmer, stopwords}{Stemming and stop-word options applied to all \code{text}
-columns. See \code{\link[=tnt_text]{tnt_text()}}.}
+\item{stemmer, stopwords, fold_accents}{Stemming, stop-word and accent-folding
+options applied to all \code{text} columns. See \code{\link[=tnt_text]{tnt_text()}}.}
 
 \item{stored}{Logical. Store text columns so they are returned by searches.}
 

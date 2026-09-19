@@ -1,7 +1,7 @@
 # Schema definition: field constructors and tnt_schema().
 
 new_tnt_field <- function(kind, stored, indexed, fast, stemmer = "none",
-                          stopwords = FALSE) {
+                          stopwords = FALSE, fold_accents = FALSE) {
   structure(
     list(
       kind = kind,
@@ -9,7 +9,8 @@ new_tnt_field <- function(kind, stored, indexed, fast, stemmer = "none",
       indexed = isTRUE(indexed),
       fast = isTRUE(fast),
       stemmer = stemmer,
-      stopwords = isTRUE(stopwords)
+      stopwords = isTRUE(stopwords),
+      fold_accents = isTRUE(fold_accents)
     ),
     class = "tnt_field"
   )
@@ -33,6 +34,11 @@ new_tnt_field <- function(kind, stored, indexed, fast, stemmer = "none",
 #'   `"english"`. See [tnt_stemmers()].
 #' @param stopwords Logical. Remove stop words for the chosen language. Bundled
 #'   for Portuguese and English. Defaults to `FALSE`.
+#' @param fold_accents Logical. Remove diacritics from indexed words and from
+#'   queries, so that `"orcamento"` finds `"orçamento"` (ASCII folding). Applied
+#'   after stop-word removal and stemming, which both rely on correctly accented
+#'   text. Stored values keep their accents. Not available with
+#'   `stemmer = "raw"`. Defaults to `FALSE`.
 #'
 #' @return A `tnt_field` object.
 #' @seealso [tnt_schema()]
@@ -49,9 +55,11 @@ NULL
 #' @rdname tnt_field
 #' @export
 tnt_text <- function(stored = TRUE, indexed = TRUE, fast = FALSE,
-                     stemmer = "none", stopwords = FALSE) {
+                     stemmer = "none", stopwords = FALSE,
+                     fold_accents = FALSE) {
   stemmer <- match.arg(stemmer, tnt_valid_stemmers)
-  new_tnt_field("text", stored, indexed, fast, stemmer, stopwords)
+  tnt_tokenizer_name(stemmer, FALSE, fold_accents) # validate the combination
+  new_tnt_field("text", stored, indexed, fast, stemmer, stopwords, fold_accents)
 }
 
 #' @rdname tnt_field
@@ -137,7 +145,7 @@ tnt_schema_vectors <- function(schema) {
   fast <- vapply(schema, function(f) f$fast, logical(1))
   tokenizers <- vapply(schema, function(f) {
     if (f$kind %in% c("text", "json")) {
-      tnt_tokenizer_name(f$stemmer, f$stopwords)
+      tnt_tokenizer_name(f$stemmer, f$stopwords, f$fold_accents)
     } else {
       ""
     }
@@ -166,6 +174,7 @@ print.tnt_field <- function(x, ...) {
     extra <- c(extra, paste0("stemmer=", x$stemmer))
     if (isTRUE(x$stopwords)) extra <- c(extra, "stopwords")
   }
+  if (isTRUE(x$fold_accents)) extra <- c(extra, "fold_accents")
   flags <- c(
     if (x$stored) "stored",
     if (x$indexed) "indexed",
@@ -181,7 +190,7 @@ print.tnt_schema <- function(x, ...) {
   for (nm in names(x)) {
     f <- x[[nm]]
     tok <- if (f$kind %in% c("text", "json")) {
-      paste0(" [", tnt_tokenizer_name(f$stemmer, f$stopwords), "]")
+      paste0(" [", tnt_tokenizer_name(f$stemmer, f$stopwords, f$fold_accents), "]")
     } else {
       ""
     }

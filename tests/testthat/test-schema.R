@@ -42,3 +42,15 @@ test_that("tnt_stemmers lists the supported languages", {
   st <- tnt_stemmers()
   expect_true(all(c("none", "raw", "portuguese", "english") %in% st))
 })
+
+test_that("fold_accents maps to the expected tokenizer names", {
+  expect_equal(tnt_tokenizer_name("none", FALSE, TRUE), "tnt_none_fold")
+  expect_equal(tnt_tokenizer_name("portuguese", FALSE, TRUE), "tnt_pt_fold")
+  expect_equal(tnt_tokenizer_name("portuguese", TRUE, TRUE), "tnt_pt_stop_fold")
+  expect_equal(tnt_tokenizer_name("portuguese", TRUE, FALSE), "tnt_pt_stop")
+  expect_equal(tnt_tokenizer_name("none"), "default")
+  expect_error(
+    tnt_text(stemmer = "raw", fold_accents = TRUE),
+    class = "tnt_error_bad_field"
+  )
+})

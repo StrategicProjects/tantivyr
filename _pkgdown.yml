@@ -15,7 +15,7 @@ home:
 
 navbar:
   structure:
-    left: [intro, reference, news]
+    left: [intro, articles, reference, news]
     right: [search, github]
 
 reference:
@@ -43,6 +43,9 @@ reference:
     contents:
       - tnt_search
       - tnt_count
+  - title: Data
+    contents:
+      - pt_news
   - title: Package
     contents:
       - tantivyr-package

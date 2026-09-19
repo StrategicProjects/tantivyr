@@ -1,6 +1,6 @@
 Package: tantivyr
 Title: Fast Full-Text Search for R with 'Tantivy'
-Version: 0.1.0.9000
+Version: 0.1.1
 Authors@R: c(
     person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre")),
     person("Marcos", "Wasilew", email = "marcos.wasilew@gmail.com", role = "aut"),
@@ -19,8 +19,9 @@ URL: https://strategicprojects.github.io/tantivyr/,
     https://github.com/StrategicProjects/tantivyr
 BugReports: https://github.com/StrategicProjects/tantivyr/issues
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
-SystemRequirements: Cargo (Rust's package manager), rustc
+SystemRequirements: Cargo (Rust's package manager), rustc (>= 1.88)
 Depends:
     R (>= 4.2)
 Imports:

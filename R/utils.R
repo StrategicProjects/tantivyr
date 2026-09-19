@@ -17,12 +17,20 @@ tnt_valid_stemmers <- c("none", "raw", names(tnt_lang_codes), unname(tnt_lang_co
 
 # Resolve a stemmer name to the tantivy tokenizer name used in the schema.
 # Mirrors the decoding logic in `src/rust/src/analyzer.rs`.
-tnt_tokenizer_name <- function(stemmer = "none", stopwords = FALSE) {
+tnt_tokenizer_name <- function(stemmer = "none", stopwords = FALSE,
+                               fold_accents = FALSE) {
   stemmer <- match.arg(stemmer, tnt_valid_stemmers)
+  fold <- isTRUE(fold_accents)
   if (stemmer == "none") {
-    return("default")
+    return(if (fold) "tnt_none_fold" else "default")
   }
   if (stemmer == "raw") {
+    if (fold) {
+      cli::cli_abort(c(
+        "{.arg fold_accents} cannot be combined with {.code stemmer = \"raw\"}.",
+        i = "Raw fields are stored as a single exact token and are not analysed."
+      ), class = "tnt_error_bad_field")
+    }
     return("raw")
   }
   code <- if (stemmer %in% names(tnt_lang_codes)) tnt_lang_codes[[stemmer]] else stemmer
@@ -33,7 +41,11 @@ tnt_tokenizer_name <- function(stemmer = "none", stopwords = FALSE) {
     ))
     stopwords <- FALSE
   }
-  if (isTRUE(stopwords)) paste0("tnt_", code, "_stop") else paste0("tnt_", code)
+  paste0(
+    "tnt_", code,
+    if (isTRUE(stopwords)) "_stop",
+    if (fold) "_fold"
+  )
 }
 
 # Infer a tantivy field kind from an R column (used by tnt_index_df()).
