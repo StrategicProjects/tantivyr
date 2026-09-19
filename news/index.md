@@ -1,6 +1,13 @@
 # Changelog
 
+## tantivyr (development version)
+
+- Updated the bundled Tantivy engine to 0.26.2 (bug-fix release; no API
+  changes).
+
 ## tantivyr 0.1.0
+
+CRAN release: 2026-07-15
 
 - Initial release.
 - [`tnt_index_df()`](https://strategicprojects.github.io/tantivyr/reference/tnt_index_df.md)
