@@ -2,6 +2,8 @@
 
 ## tantivyr 0.1.1
 
+CRAN release: 2026-09-22
+
 - New `fold_accents` argument in
   [`tnt_text()`](https://strategicprojects.github.io/tantivyr/reference/tnt_field.md)
   and
