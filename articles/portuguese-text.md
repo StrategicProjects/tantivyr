@@ -92,8 +92,8 @@ tnt_search(idx, "pesquisar")[, c("score", "section", "title")]
 #>   <dbl> <chr>      <chr>                                                        
 #> 1  4.78 tecnologia Pesquisadores desenvolvem bateria que carrega em cinco minut…
 #> 2  4.78 saúde      Pesquisadores testam nova vacina contra a dengue             
-#> 3  2.15 tecnologia Satélite brasileiro de monitoramento é lançado com sucesso   
-#> 4  2.15 educação   Biblioteca municipal digitaliza acervo de jornais antigos
+#> 3  2.15 educação   Biblioteca municipal digitaliza acervo de jornais antigos    
+#> 4  2.15 tecnologia Satélite brasileiro de monitoramento é lançado com sucesso
 ```
 
 Stemming is a heuristic, not a dictionary. Irregular plurals do not
