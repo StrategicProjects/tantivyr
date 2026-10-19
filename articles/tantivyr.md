@@ -62,8 +62,8 @@ tnt_search(idx, "orçamento")
 #> # A tibble: 2 × 5
 #>   score    id title                                     source  year
 #>   <dbl> <dbl> <chr>                                     <chr>  <dbl>
-#> 1 0.893     4 Congresso debate orçamentos municipais    C       2024
-#> 2 0.893     1 Orçamento público aprovado pelo congresso A       2022
+#> 1 0.893     1 Orçamento público aprovado pelo congresso A       2022
+#> 2 0.893     4 Congresso debate orçamentos municipais    C       2024
 ```
 
 ### Filtering
@@ -114,8 +114,8 @@ tnt_search(idx, "", filter = "year:[2023 TO *] AND source:B")
 ``` r
 
 tnt_search(idx, "congresso", highlight = title)$title_snippet
-#> [1] "<b>Congresso</b> debate orçamentos municipais"   
-#> [2] "Orçamento público aprovado pelo <b>congresso</b>"
+#> [1] "Orçamento público aprovado pelo <b>congresso</b>"
+#> [2] "<b>Congresso</b> debate orçamentos municipais"
 
 tnt_search(idx, "", order_by = year, desc = TRUE)[, c("title", "year")]
 #> # A tibble: 5 × 2

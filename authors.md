@@ -2,29 +2,35 @@
 
 ## Authors
 
-- **Andre Leite**. Author, maintainer.
+- **André Leite**. Author, maintainer.
+  [](https://orcid.org/0000-0002-4718-9766)
 
-- **Marcos Wasilew**. Author.
+- **Marcos Wasiliew**. Author. [](https://orcid.org/0009-0004-4694-3159)
 
 - **Hugo Vasconcelos**. Author.
+  [](https://orcid.org/0000-0001-6249-0920)
 
-- **Carlos Amorim**. Author.
+- **Carlos Amorim**. Author. [](https://orcid.org/0000-0001-6315-8305)
 
-- **Diogo Bezerra**. Author.
+- **Diogo Bezerra**. Author. [](https://orcid.org/0000-0002-1216-8674)
+
+- **Júlia Nascimento Barreto**. Author.
+  [](https://orcid.org/0009-0004-2851-7770)
 
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/StrategicProjects/tantivyr/blob/v0.1.1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/StrategicProjects/tantivyr/blob/main/DESCRIPTION)
 
-Leite A, Wasilew M, Vasconcelos H, Amorim C, Bezerra D (2026).
-*tantivyr: Fast Full-Text Search for R with 'Tantivy'*. R package
-version 0.1.1, <https://strategicprojects.github.io/tantivyr/>.
+Leite A, Wasiliew M, Vasconcelos H, Amorim C, Bezerra D, Nascimento
+Barreto J (2026). *tantivyr: Fast Full-Text Search for R with
+'Tantivy'*. R package version 0.1.1.9000,
+<https://strategicprojects.github.io/tantivyr/>.
 
     @Manual{,
       title = {tantivyr: Fast Full-Text Search for R with 'Tantivy'},
-      author = {Andre Leite and Marcos Wasilew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra},
+      author = {André Leite and Marcos Wasiliew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra and Júlia {Nascimento Barreto}},
       year = {2026},
-      note = {R package version 0.1.1},
+      note = {R package version 0.1.1.9000},
       url = {https://strategicprojects.github.io/tantivyr/},
     }

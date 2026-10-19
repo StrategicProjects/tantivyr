@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">tantivyr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Getting started with tantivyr</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/StrategicProjects/tantivyr/blob/v0.1.1/vignettes/tantivyr.Rmd" class="external-link"><code>vignettes/tantivyr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StrategicProjects/tantivyr/blob/main/vignettes/tantivyr.Rmd" class="external-link"><code>vignettes/tantivyr.Rmd</code></a></small>
       <div class="d-none name"><code>tantivyr.Rmd</code></div>
     </div>
 
@@ -120,8 +120,8 @@ stemmer, a search for <em>orçamento</em> also matches
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span></span>
 <span><span class="co">#&gt;   score    id title                                     source  year</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0.893     4 Congresso debate orçamentos municipais    C       <span style="text-decoration: underline;">2</span>024</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0.893     1 Orçamento público aprovado pelo congresso A       <span style="text-decoration: underline;">2</span>022</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0.893     1 Orçamento público aprovado pelo congresso A       <span style="text-decoration: underline;">2</span>022</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0.893     4 Congresso debate orçamentos municipais    C       <span style="text-decoration: underline;">2</span>024</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
@@ -164,8 +164,8 @@ query string</a> for anything the helpers do not cover:</p>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tnt_search.html">tnt_search</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">"congresso"</span>, highlight <span class="op">=</span> <span class="va">title</span><span class="op">)</span><span class="op">$</span><span class="va">title_snippet</span></span>
-<span><span class="co">#&gt; [1] "&lt;b&gt;Congresso&lt;/b&gt; debate orçamentos municipais"   </span></span>
-<span><span class="co">#&gt; [2] "Orçamento público aprovado pelo &lt;b&gt;congresso&lt;/b&gt;"</span></span>
+<span><span class="co">#&gt; [1] "Orçamento público aprovado pelo &lt;b&gt;congresso&lt;/b&gt;"</span></span>
+<span><span class="co">#&gt; [2] "&lt;b&gt;Congresso&lt;/b&gt; debate orçamentos municipais"</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/tnt_search.html">tnt_search</a></span><span class="op">(</span><span class="va">idx</span>, <span class="st">""</span>, order_by <span class="op">=</span> <span class="va">year</span>, desc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"title"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
@@ -281,7 +281,7 @@ stemming/stop-word options.</li>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Andre Leite, Marcos Wasilew, Hugo Vasconcelos, Carlos Amorim, Diogo Bezerra.</p>
+  <p>Developed by André Leite, Marcos Wasiliew, Hugo Vasconcelos, Carlos Amorim, Diogo Bezerra, Júlia Nascimento Barreto.</p>
 </div>
 
 <div class="pkgdown-footer-right">

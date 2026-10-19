@@ -92,8 +92,8 @@ tnt_search(idx, "pesquisar")[, c("score", "section", "title")]
 #>   <dbl> <chr>      <chr>                                                        
 #> 1  4.78 saúde      Pesquisadores testam nova vacina contra a dengue             
 #> 2  4.78 tecnologia Pesquisadores desenvolvem bateria que carrega em cinco minut…
-#> 3  2.15 educação   Biblioteca municipal digitaliza acervo de jornais antigos    
-#> 4  2.15 tecnologia Satélite brasileiro de monitoramento é lançado com sucesso
+#> 3  2.15 tecnologia Satélite brasileiro de monitoramento é lançado com sucesso   
+#> 4  2.15 educação   Biblioteca municipal digitaliza acervo de jornais antigos
 ```
 
 Stemming is a heuristic, not a dictionary. Irregular plurals do not
@@ -125,8 +125,8 @@ tnt_search(idx, "a redução dos juros", limit = 3)[, c("score", "title")]
 #>   score title                                                          
 #>   <dbl> <chr>                                                          
 #> 1  6.50 Banco central reduz a taxa de juros pela quarta vez            
-#> 2  2.58 Inflação desacelera e fecha o ano abaixo da meta               
-#> 3  2.58 Governo anuncia novo programa de crédito para pequenas empresas
+#> 2  2.58 Governo anuncia novo programa de crédito para pequenas empresas
+#> 3  2.58 Inflação desacelera e fecha o ano abaixo da meta
 ```
 
 ## Accents
