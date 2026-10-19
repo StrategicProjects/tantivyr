@@ -38,7 +38,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="tantivyr-development-version">tantivyr (development version)<a class="anchor" aria-label="anchor" href="#tantivyr-development-version"></a></h2>
-</div>
+<ul><li>Updated the bundled ‘Tantivy’ engine to 0.27.0 and refreshed the vendored ‘Rust’ crates. The on-disk index format is unchanged (v7), so existing indexes keep working. This also replaces the <code>lru</code> crate with a version that fixes RUSTSEC-2026-0253 (the unsound code was never reachable from ‘tantivyr’).</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="tantivyr-011">tantivyr 0.1.1<a class="anchor" aria-label="anchor" href="#tantivyr-011"></a></h2><p class="text-muted">CRAN release: 2026-09-22</p>
 <ul><li>New <code>fold_accents</code> argument in <code><a href="../reference/tnt_field.html">tnt_text()</a></code> and <code><a href="../reference/tnt_index_df.html">tnt_index_df()</a></code>: removes diacritics from indexed words and queries (ASCII folding), so a query typed without accents, such as <code>"orcamento"</code>, finds <code>"orçamento"</code>. Stored text and snippets keep their accents.</li>

@@ -2,6 +2,12 @@
 
 ## tantivyr (development version)
 
+- Updated the bundled ‘Tantivy’ engine to 0.27.0 and refreshed the
+  vendored ‘Rust’ crates. The on-disk index format is unchanged (v7), so
+  existing indexes keep working. This also replaces the `lru` crate with
+  a version that fixes RUSTSEC-2026-0253 (the unsound code was never
+  reachable from ‘tantivyr’).
+
 ## tantivyr 0.1.1
 
 CRAN release: 2026-09-22
