@@ -15,7 +15,7 @@ path = 'document.rs'
 
 [dependencies]
 extendr-api = '0.9'
-tantivy = '0.26'
+tantivy = '0.27'
 
 [profile.release]
 lto = true
