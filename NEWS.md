@@ -1,3 +1,5 @@
+# tantivyr (development version)
+
 # tantivyr 0.1.1
 
 * New `fold_accents` argument in `tnt_text()` and `tnt_index_df()`: removes
