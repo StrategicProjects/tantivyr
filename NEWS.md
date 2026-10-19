@@ -1,4 +1,4 @@
-# tantivyr (development version)
+# tantivyr 0.1.2
 
 * Updated the bundled 'Tantivy' engine to 0.27.0 and refreshed the vendored
   'Rust' crates. The on-disk index format is unchanged (v7), so existing
