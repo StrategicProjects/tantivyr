@@ -1,19 +1,26 @@
 ## Update
 
-This is a minor update (0.1.0 -> 0.1.1). It:
+This is a minor update (0.1.1 -> 0.1.2). It:
 
-* adds an accent-folding option (`fold_accents`) for text fields;
-* adds a small example dataset (`pt_news`) and a second vignette;
-* updates the bundled 'Tantivy' engine to its 0.26.2 bug-fix release and
-  refreshes the vendored 'Rust' crates;
-* declares the minimum supported 'Rust' version in `SystemRequirements`
-  (`rustc >= 1.88`), which `configure` checks before compiling.
+* updates the bundled 'Tantivy' engine to its 0.27.0 release and refreshes the
+  vendored 'Rust' crates. The on-disk index format is unchanged, so indexes
+  created with earlier versions keep working;
+* the refreshed crates also remove the code affected by RUSTSEC-2026-0253
+  (an unsoundness advisory in the `lru` crate; the affected function was never
+  reachable from this package);
+* fixes the additional issue reported for 0.1.1 on M1mac (ld warnings
+  "object file was built for newer 'macOS' version than being linked"): on
+  macOS, the Cargo build now sets `MACOSX_DEPLOYMENT_TARGET` to match the
+  final link target unless it is already set in the environment, so the
+  objects compiled by Cargo no longer default to the SDK's newer version.
+  Verified locally by reproducing the mismatch (Xcode SDK 27 on macOS 26)
+  before and after the fix.
 
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
 
-* Installed size (~10 MB, in `libs`) and source tarball size (~21 MB) come from
+* Installed size (~10 MB, in `libs`) and source tarball size (~20 MB) come from
   the statically linked Rust search engine ('Tantivy') and its vendored crate
   sources, which are bundled so the package builds offline (see below). The Rust
   object code is compiled with `lto`, `opt-level = 2` and `strip = true` to keep
@@ -40,5 +47,3 @@ There are currently no reverse dependencies.
 
 * Tantivy and all vendored crates are MIT/Apache-2.0 licensed; the package is
   MIT licensed.
-* The `pt_news` dataset was written for this package and contains UTF-8
-  (Portuguese) strings by design.

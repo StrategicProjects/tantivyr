@@ -34,8 +34,17 @@ $(STATLIB):
 		cp rust/vendor-config.toml $(CARGOTMP)/config.toml; \
 	fi
 
+	# On macOS, align the deployment target of the cargo-built objects (the
+	# cc crate compiles C sources, e.g. zstd) with the host version the final
+	# link targets; otherwise a newer Xcode SDK makes ld warn that the objects
+	# were "built for newer macOS version than being linked" (seen on CRAN's
+	# M1mac additional checks). An already-set value is respected (the CRAN
+	# binary builders set their own).
 	export CARGO_HOME=$(CARGOTMP) && \
 	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
+	if [ "`uname`" = "Darwin" ] && [ -z "$${MACOSX_DEPLOYMENT_TARGET}" ]; then \
+		export MACOSX_DEPLOYMENT_TARGET="`sw_vers -productVersion | cut -d. -f1`.0"; \
+	fi && \
 	@PANIC_EXPORTS@RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build @CRAN_FLAGS@ --lib @PROFILE@ --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR) @TARGET@
 
 	# Note: the R wrappers (R/extendr-wrappers.R) are generated at development
