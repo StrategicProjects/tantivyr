@@ -94,7 +94,7 @@ fn text_options(spec: &FieldSpec) -> TextOptions {
         opts = opts.set_indexing_options(indexing);
     }
     if spec.fast {
-        opts = opts.set_fast(None);
+        opts = opts.set_fast("raw");
     }
     opts
 }
