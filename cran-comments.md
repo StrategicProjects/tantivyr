@@ -7,7 +7,14 @@ This is a minor update (0.1.1 -> 0.1.2). It:
   created with earlier versions keep working;
 * the refreshed crates also remove the code affected by RUSTSEC-2026-0253
   (an unsoundness advisory in the `lru` crate; the affected function was never
-  reachable from this package).
+  reachable from this package);
+* fixes the additional issue reported for 0.1.1 on M1mac (ld warnings
+  "object file was built for newer 'macOS' version than being linked"): on
+  macOS, the Cargo build now sets `MACOSX_DEPLOYMENT_TARGET` to match the
+  final link target unless it is already set in the environment, so the
+  objects compiled by Cargo no longer default to the SDK's newer version.
+  Verified locally by reproducing the mismatch (Xcode SDK 27 on macOS 26)
+  before and after the fix.
 
 ## R CMD check results
 

@@ -5,6 +5,10 @@
   indexes keep working. This also replaces the `lru` crate with a version
   that fixes RUSTSEC-2026-0253 (the unsound code was never reachable from
   'tantivyr').
+* Fixed the macOS linker warnings reported by CRAN's M1mac additional checks
+  ("object file was built for newer 'macOS' version than being linked"): on
+  macOS the 'Rust' build now uses the same deployment target as the final
+  link step, unless `MACOSX_DEPLOYMENT_TARGET` is already set.
 
 # tantivyr 0.1.1
 
