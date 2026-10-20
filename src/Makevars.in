@@ -34,16 +34,21 @@ $(STATLIB):
 		cp rust/vendor-config.toml $(CARGOTMP)/config.toml; \
 	fi
 
-	# On macOS, align the deployment target of the cargo-built objects (the
-	# cc crate compiles C sources, e.g. zstd) with the host version the final
-	# link targets; otherwise a newer Xcode SDK makes ld warn that the objects
-	# were "built for newer macOS version than being linked" (seen on CRAN's
-	# M1mac additional checks). An already-set value is respected (the CRAN
-	# binary builders set their own).
+	# On macOS, pin the deployment target of the cargo-built objects to
+	# rustc's own default for the target (11.0 on arm64), so the C sources
+	# compiled by the cc crate (e.g. zstd) stop defaulting to the SDK's
+	# version. An object stamped with an old minimum can be linked against
+	# any newer target, so this removes the ld warnings "object file was
+	# built for newer 'macOS' version than being linked" seen on CRAN's
+	# M1mac additional checks, whatever version R's final link step targets
+	# (it cannot be predicted from here: it is not always the host major).
+	# An already-set value is respected (the CRAN binary builders set their
+	# own).
 	export CARGO_HOME=$(CARGOTMP) && \
 	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
 	if [ "`uname`" = "Darwin" ] && [ -z "$${MACOSX_DEPLOYMENT_TARGET}" ]; then \
-		export MACOSX_DEPLOYMENT_TARGET="`sw_vers -productVersion | cut -d. -f1`.0"; \
+		export MACOSX_DEPLOYMENT_TARGET="`rustc --print deployment-target 2>/dev/null | sed -e 's/^.*=//'`"; \
+		export MACOSX_DEPLOYMENT_TARGET="$${MACOSX_DEPLOYMENT_TARGET:-11.0}"; \
 	fi && \
 	@PANIC_EXPORTS@RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build @CRAN_FLAGS@ --lib @PROFILE@ --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR) @TARGET@
 
