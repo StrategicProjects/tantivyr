@@ -1,4 +1,4 @@
-# tantivyr 0.1.2
+# tantivyr 0.1.3
 
 * Updated the bundled 'Tantivy' engine to 0.27.0 and refreshed the vendored
   'Rust' crates. The on-disk index format is unchanged (v7), so existing
@@ -7,8 +7,10 @@
   'tantivyr').
 * Fixed the macOS linker warnings reported by CRAN's M1mac additional checks
   ("object file was built for newer 'macOS' version than being linked"): on
-  macOS the 'Rust' build now uses the same deployment target as the final
-  link step, unless `MACOSX_DEPLOYMENT_TARGET` is already set.
+  macOS the Cargo build now pins `MACOSX_DEPLOYMENT_TARGET` to rustc's own
+  default for the platform (11.0 on Apple silicon) unless it is already set,
+  so the C sources compiled by Cargo carry a minimum version that is never
+  newer than the one R links against.
 
 # tantivyr 0.1.1
 
