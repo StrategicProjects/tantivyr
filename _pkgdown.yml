@@ -18,6 +18,19 @@ navbar:
     left: [intro, articles, reference, news]
     right: [search, github]
 
+footer:
+  structure:
+    left: [developed_by, third_party]
+    right: built_with
+  components:
+    third_party: >
+      Search engine: [Tantivy](https://github.com/quickwit-oss/tantivy),
+      © the Tantivy project authors, MIT license. tantivyr is not affiliated
+      with or endorsed by the Tantivy project or Quickwit. Credits for all
+      bundled code:
+      [AUTHORS](https://github.com/StrategicProjects/tantivyr/blob/main/inst/AUTHORS),
+      [COPYRIGHTS](https://github.com/StrategicProjects/tantivyr/blob/main/inst/COPYRIGHTS).
+
 reference:
   - title: Create & open indexes
     desc: Build an index from a data frame, or from an explicit schema.

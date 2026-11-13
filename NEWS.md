@@ -1,3 +1,14 @@
+# tantivyr (development version)
+
+* Third-party credit: the authors of the bundled 'Tantivy' search engine and
+  of the vendored 'Rust' crates are now recorded as copyright holders in
+  `DESCRIPTION` (`Authors@R` and a new `Copyright` field). New `inst/AUTHORS`
+  lists every vendored crate with its version, license and copyright holders,
+  and new `inst/COPYRIGHTS` reproduces Tantivy's notice and the notices and
+  license texts of the crates that are not under the MIT license (generated
+  by `tools/make-copyrights.py`). The README states that 'tantivyr' is not
+  affiliated with the Tantivy project or Quickwit.
+
 # tantivyr 0.1.3
 
 * Updated the bundled 'Tantivy' engine to 0.27.0 and refreshed the vendored

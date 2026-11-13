@@ -13,7 +13,23 @@ Authors@R: c(
     person("Diogo", "Bezerra", email = "diogo.bezerra@ufpe.br", role = "aut",
            comment = c(ORCID = "0000-0002-1216-8674")),
     person("Júlia", "Nascimento Barreto", email = "juliabarreto@gd.seplag.pe.gov.br", role = "aut",
-           comment = c(ORCID = "0009-0004-2851-7770")))
+           comment = c(ORCID = "0009-0004-2851-7770")),
+    person("Paul", "Masurel", role = "cph",
+           comment = "Author of the bundled 'Tantivy' search engine (Rust crate 'tantivy' and its companion crates)"),
+    person("Laurentiu", "Nicola", role = "cph",
+           comment = "Listed in the AUTHORS file of the bundled 'Tantivy'"),
+    person("Dru", "Sellers", role = "cph",
+           comment = "Listed in the AUTHORS file of the bundled 'Tantivy'"),
+    person("Ashley", "Mannix", role = "cph",
+           comment = "Listed in the AUTHORS file of the bundled 'Tantivy'"),
+    person("Michael J.", "Curry", role = "cph",
+           comment = "Listed in the AUTHORS file of the bundled 'Tantivy'"),
+    person("Jason", "Wolfe", role = "cph",
+           comment = "Listed in the AUTHORS file of the bundled 'Tantivy'"),
+    person("Google LLC", role = "cph",
+           comment = "Listed in the AUTHORS file of the bundled 'Tantivy'"),
+    person("Authors of the vendored Rust crates", role = "cph",
+           comment = "see inst/AUTHORS"))
 Description: Index data frames and document collections and run fast full-text
     search entirely on your machine. 'tantivyr' wraps the 'Tantivy' 'Rust' search
     engine (a 'Lucene'-inspired library) to provide 'BM25' ranking, structured
@@ -21,6 +37,12 @@ Description: Index data frames and document collections and run fast full-text
     in-memory index. First-class support is provided for stemming and stop words
     in Portuguese and English, making it well suited to public documents, news
     clippings, extracted 'PDF' text, transcripts and legal acts.
+Copyright: 'Tantivy', the search engine this package wraps and bundles, is
+    copyright (c) 2018 by its project authors (Paul Masurel and the others
+    listed in its AUTHORS file) and distributed under the MIT license; its
+    notice is reproduced in inst/COPYRIGHTS. See inst/AUTHORS for the
+    copyright holders and licenses of all bundled 'Rust' crates. The R
+    interface is copyright of the package authors.
 License: MIT + file LICENSE
 URL: https://strategicprojects.github.io/tantivyr/,
     https://github.com/StrategicProjects/tantivyr
