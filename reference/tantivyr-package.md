@@ -43,3 +43,29 @@ Authors:
 
 - Júlia Nascimento Barreto <juliabarreto@gd.seplag.pe.gov.br>
   ([ORCID](https://orcid.org/0009-0004-2851-7770))
+
+Other contributors:
+
+- Paul Masurel (Author of the bundled 'Tantivy' search engine (Rust
+  crate 'tantivy' and its companion crates)) \[copyright holder\]
+
+- Laurentiu Nicola (Listed in the AUTHORS file of the bundled 'Tantivy')
+  \[copyright holder\]
+
+- Dru Sellers (Listed in the AUTHORS file of the bundled 'Tantivy')
+  \[copyright holder\]
+
+- Ashley Mannix (Listed in the AUTHORS file of the bundled 'Tantivy')
+  \[copyright holder\]
+
+- Michael J. Curry (Listed in the AUTHORS file of the bundled 'Tantivy')
+  \[copyright holder\]
+
+- Jason Wolfe (Listed in the AUTHORS file of the bundled 'Tantivy')
+  \[copyright holder\]
+
+- Google LLC (Listed in the AUTHORS file of the bundled 'Tantivy')
+  \[copyright holder\]
+
+- Authors of the vendored Rust crates (see inst/AUTHORS) \[copyright
+  holder\]

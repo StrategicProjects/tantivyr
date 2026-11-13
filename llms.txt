@@ -7,6 +7,11 @@ or a collection of documents and search it with **BM25 ranking**,
 **structured filters**, **snippet highlighting** and **incremental
 updates**, all on your own machine.
 
+The search engine is the work of Paul Masurel and the Tantivy
+contributors (MIT license); tantivyr is an independent R binding and is
+not affiliated with, sponsored by or endorsed by the Tantivy project or
+by Quickwit, Inc. See [License and credits](#license-and-credits).
+
 It is built for text in **Portuguese** and **English** (stemming and
 stop words included), making it a good fit for public documents, news
 clippings, extracted PDF text, transcripts and legal acts.
@@ -137,9 +142,33 @@ text you control, with an index that updates incrementally and persists
 to disk. It is not a database and not an embeddings/semantic-search tool
 — it is the local, dependency-light BM25 engine that R has been missing.
 
-## License
+## License and credits
 
-MIT © tantivyr authors. Tantivy itself is MIT licensed.
+The R package is MIT licensed, © tantivyr authors (see `LICENSE`).
+
+tantivyr bundles and statically links third-party code, which remains
+the copyright of its authors:
+
+- [Tantivy](https://github.com/quickwit-oss/tantivy), the search engine,
+  is copyright (c) 2018 by the Tantivy project authors (Paul Masurel and
+  the others listed in Tantivy’s `AUTHORS` file) and MIT licensed.
+- Tantivy’s dependencies and the [extendr](https://extendr.rs/) bridge
+  are vendored as Rust crates in `src/rust/vendor.tar.xz`. Most are used
+  under the MIT license; a few are available only under Apache-2.0,
+  BSD-3-Clause, Zlib or Unicode-3.0 (among them the Snowball stemmers
+  and the Zstandard library).
+
+[`inst/AUTHORS`](https://github.com/StrategicProjects/tantivyr/blob/main/inst/AUTHORS)
+lists every bundled crate with its version, license and copyright
+holders, and
+[`inst/COPYRIGHTS`](https://github.com/StrategicProjects/tantivyr/blob/main/inst/COPYRIGHTS)
+reproduces Tantivy’s notice and the notices and license texts of the
+crates that are not under MIT. In an installed package they are at
+`system.file("AUTHORS", package = "tantivyr")` and
+`system.file("COPYRIGHTS", package = "tantivyr")`.
+
+tantivyr is not affiliated with, sponsored by or endorsed by the Tantivy
+project or Quickwit, Inc.
 
 # Package index
 
